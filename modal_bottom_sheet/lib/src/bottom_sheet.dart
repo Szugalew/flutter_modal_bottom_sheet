@@ -324,8 +324,10 @@ class ModalBottomSheetState extends State<ModalBottomSheet>
       final startTime = _startTime!;
       final velocityTracker = _velocityTracker!;
       if (dragDetails != null) {
-        final duration = startTime.difference(DateTime.now());
-        velocityTracker.addPosition(duration, Offset(0, offset));
+        velocityTracker.addPosition(
+          dragDetails.sourceTimeStamp ?? DateTime.now().difference(startTime),
+          dragDetails.localPosition,
+        );
         _handleDragUpdate(dragDetails.delta.dy);
       } else if (isDragging) {
         final velocity = velocityTracker.getVelocity().pixelsPerSecond.dy;
